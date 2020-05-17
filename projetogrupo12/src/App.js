@@ -2,6 +2,7 @@ import React from 'react';
 
 import './App.css';
 import styled from 'styled-components';
+import {Mensagem} from './Components/Mensagem';
 
 const AppContent = styled.div`
   background-color: white;
@@ -43,6 +44,18 @@ const InputField = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+
+  & :first-child {
+      width:20%
+  }
+
+  & :nth-child(2) {
+      width:60%
+  }
+
+  & :nth-child(3) {
+      margin: auto;
+  }
 `
 
 class App extends React.Component {
@@ -58,11 +71,9 @@ class App extends React.Component {
     
     valorInputUsuario: "",
     valorInputTexto: "",
-    
   };
 
   adicionarMensagem = () => {
-    
     const novaMensagem = {
      
       usuario: this.state.valorInputUsuario,
@@ -92,7 +103,7 @@ class App extends React.Component {
     const listaDeComponentes = this.state.mensagems.map(pessoa => {
       return (
         <MessageStyle>
-          <b>{pessoa.usuario}</b> : {pessoa.texto} 
+          <Mensagem key={Date.now()} usuario={pessoa.usuario} texto={pessoa.texto}/>
         </MessageStyle>
       );
     });
@@ -102,6 +113,7 @@ class App extends React.Component {
         <AppHeader>
           <Title>Lista de Mensagem</Title>
         </AppHeader>
+
         <MessageFeed>{listaDeComponentes}</MessageFeed>
         <AppFooter>
           <InputField>
@@ -109,14 +121,12 @@ class App extends React.Component {
               value={this.state.valorInputUsuario}            
               onChange={this.onChangeInputUsuario}
               placeholder={"Usuário"}
-              size="15"
             />
             <input
               type="text"
               value={this.state.valorInputTexto}           
               onChange={this.onChangeInputTexto}
               placeholder={"Mensagem"}
-              size="50"
             />
             <button onClick={this.adicionarMensagem}>Enviar</button>
           </InputField>
